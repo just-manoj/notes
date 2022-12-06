@@ -1,18 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import NoteContent from "../UI/NoteContent";
 import SearchBar from "../UI/SearchBar";
 import { notes } from "../utils/constNotes";
 import FlatButton from "../UI/Flatbutton";
+import { storeNotes } from "../redux/NoteData";
 
 const List = () => {
   const [searchText, setSearchText] = useState("");
+  const dispatch = useDispatch();
+  const noteDetails = useSelector((state) => state.noteData.notes);
 
   const clearSearchText = () => {
     setSearchText("");
   };
 
+  useEffect(() => {
+    const storeNotesDetails = async () => {
+      dispatch(storeNotes({ noteDetails: notes }));
+    };
+    storeNotesDetails();
+  }, []);
+
+  console.log(noteDetails);
   return (
     <View style={styles.container}>
       <SearchBar
@@ -20,7 +32,7 @@ const List = () => {
         setSearchText={setSearchText}
         clearSearchText={clearSearchText}
       />
-      <NoteContent notes={notes} />
+      <NoteContent notes={noteDetails} />
       <FlatButton />
     </View>
   );
