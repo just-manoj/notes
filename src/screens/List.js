@@ -4,6 +4,7 @@ import { View, StyleSheet } from "react-native";
 import NoteContent from "../UI/NoteContent";
 import SearchBar from "../UI/SearchBar";
 import { notes } from "../utils/constNotes";
+import FlatButton from "../UI/Flatbutton";
 
 const List = () => {
   const [searchText, setSearchText] = useState("");
@@ -20,6 +21,7 @@ const List = () => {
         clearSearchText={clearSearchText}
       />
       <NoteContent notes={notes} />
+      <FlatButton />
     </View>
   );
 };
