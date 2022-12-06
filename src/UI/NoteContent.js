@@ -6,7 +6,7 @@ const NoteContent = (props) => {
   const { notes } = props;
 
   return (
-    <ScrollView style={[styles.scroll]}>
+    <ScrollView style={styles.scroll}>
       <View style={styles.container}>
         <View style={[styles.full, styles.leftItemContainer]}>
           {notes
@@ -31,10 +31,8 @@ export default NoteContent;
 
 const styles = StyleSheet.create({
   scroll: {
-    // flex: 1,
     width: "100%",
     marginTop: 10,
-    // marginBottom: 36,
     borderRadius: 6,
   },
   container: {
@@ -51,5 +49,13 @@ const styles = StyleSheet.create({
   rightIemContainer: {
     marginLeft: 5,
     marginRight: 10,
+  },
+  iconContainer: {
+    padding: 5,
+    backgroundColor: "blue",
+    borderRadius: 30,
+    position: "absolute",
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
   },
 });

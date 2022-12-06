@@ -22,6 +22,8 @@ const styles = StyleSheet.create({
   },
   icon: {
     padding: 5,
+    alignItems: "center",
+    justifyContent: "center",
   },
   pressed: {
     backgroundColor: "#d6d4d4",
