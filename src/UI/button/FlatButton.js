@@ -2,11 +2,12 @@ import { View, StyleSheet } from "react-native";
 
 import IconButton from "./IconButton";
 
-const FlatButton = () => {
+const FlatButton = (props) => {
+  const { onPress } = props;
   return (
     <View style={styles.buttonContainer}>
       <View style={styles.iconContainer}>
-        <IconButton name="add" size={50} color="#660066" onPress={() => {}} />
+        <IconButton name="add" size={50} color="#660066" onPress={onPress} />
       </View>
     </View>
   );

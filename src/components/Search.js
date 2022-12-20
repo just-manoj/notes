@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native";
 
 import InputText from "../components/InputText";
-import IconButton from "../UI/IconButton";
+import IconButton from "../UI/button/IconButton";
 
 const Search = (props) => {
   const { searchText, changeTitleHandler, setSearchText, clearSearchText } =
@@ -15,11 +15,14 @@ const Search = (props) => {
         color="black"
         onPress={changeTitleHandler}
       />
-      <InputText
-        style={styles.inputText}
-        onChangeText={setSearchText}
-        value={searchText}
-      />
+      <View style={styles.full}>
+        <InputText
+          autoFocus={true}
+          style={styles.inputText}
+          onChangeText={setSearchText}
+          value={searchText}
+        />
+      </View>
       <IconButton
         name="close-outline"
         size={30}
@@ -45,5 +48,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "black",
     fontSize: 18,
+  },
+  full: {
+    flex: 1,
   },
 });

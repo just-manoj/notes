@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 
-import IconButton from "../UI/IconButton";
+import IconButton from "../UI/button/IconButton";
 
 const Title = (props) => {
   const { changeTitleHandler } = props;
