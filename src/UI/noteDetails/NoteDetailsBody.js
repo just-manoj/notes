@@ -22,7 +22,10 @@ const NoteDetailsBody = () => {
 export default NoteDetailsBody;
 
 const styles = StyleSheet.create({
-  inputContainer: { marginLeft: 9, marginTop: 5 },
+  inputContainer: {
+    marginLeft: 13,
+    marginTop: 5,
+  },
   title: {
     fontSize: 20,
     fontWeight: "600",
