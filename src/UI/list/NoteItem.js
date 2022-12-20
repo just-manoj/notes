@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
-import { dayFormat, timeFormat } from "../utils/date";
+import { dayFormat, timeFormat } from "../../utils/date";
 
 const NoteItem = (props) => {
   const { title, note, id, date, bgColor } = props;

@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import NoteContent from "../UI/NoteContent";
-import SearchBar from "../UI/SearchBar";
+import NoteContent from "../UI/list/NoteContent";
+import SearchBar from "../UI/list/SearchBar";
 import { notes } from "../utils/constNotes";
 import FlatButton from "../UI/button/FlatButton";
 import { storeNotes } from "../redux/NoteData";
