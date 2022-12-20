@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import NoteContent from "../UI/NoteContent";
 import SearchBar from "../UI/SearchBar";
 import { notes } from "../utils/constNotes";
-import FlatButton from "../UI/Flatbutton";
+import FlatButton from "../UI/button/FlatButton";
 import { storeNotes } from "../redux/NoteData";
 
-const List = () => {
+const List = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
   const noteDetails = useSelector((state) => state.noteData.notes);
@@ -24,7 +24,10 @@ const List = () => {
     storeNotesDetails();
   }, []);
 
-  console.log(noteDetails);
+  const naviationHandler = () => {
+    navigation.navigate("noteDetails");
+  };
+
   return (
     <View style={styles.container}>
       <SearchBar
@@ -33,7 +36,7 @@ const List = () => {
         clearSearchText={clearSearchText}
       />
       <NoteContent notes={noteDetails} />
-      <FlatButton />
+      <FlatButton onPress={naviationHandler} />
     </View>
   );
 };
