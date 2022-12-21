@@ -2,17 +2,26 @@ import { View, StyleSheet } from "react-native";
 
 import InputText from "../../components/InputText";
 
-const NoteDetailsBody = () => {
+const NoteDetailsBody = (props) => {
+  const { changeInputValues, inputValues } = props;
   return (
     <>
       <View style={styles.inputContainer}>
-        <InputText placeholder="Title" autoFocus={true} style={styles.title} />
+        <InputText
+          style={styles.title}
+          placeholder="Title"
+          autoFocus={true}
+          onChangeText={changeInputValues.bind(this, "title")}
+          value={inputValues.title}
+        />
       </View>
       <View style={styles.inputContainer}>
         <InputText
-          placeholder="Note here"
           style={styles.note}
+          placeholder="Note here"
           multiline={true}
+          onChangeText={changeInputValues.bind(this, "note")}
+          value={inputValues.note}
         />
       </View>
     </>

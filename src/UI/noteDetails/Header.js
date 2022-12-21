@@ -4,7 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 import IconButton from "../button/IconButton";
 import TextButton from "../button/TextButton";
 
-const Header = () => {
+const Header = (props) => {
+  const { addNewNote } = props;
   const navigation = useNavigation();
   return (
     <View style={styles.iconContainer}>
@@ -30,7 +31,7 @@ const Header = () => {
           color="black"
           onPress={() => {}}
         />
-        <TextButton>save</TextButton>
+        <TextButton onPress={addNewNote}>save</TextButton>
       </View>
     </View>
   );

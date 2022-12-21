@@ -2,8 +2,8 @@ import { View, Text, StyleSheet } from "react-native";
 
 import { dateFormat, timeFormat } from "../../utils/date";
 
-const DateHeader = () => {
-  const date = new Date();
+const DateHeader = (props) => {
+  const { date } = props;
 
   return (
     <View style={styles.container}>
