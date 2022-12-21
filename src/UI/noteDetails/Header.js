@@ -5,7 +5,7 @@ import IconButton from "../button/IconButton";
 import TextButton from "../button/TextButton";
 
 const Header = (props) => {
-  const { addNewNote } = props;
+  const { addNewNote, deleteNote } = props;
   const navigation = useNavigation();
   return (
     <View style={styles.iconContainer}>
@@ -29,7 +29,7 @@ const Header = (props) => {
           name="trash-outline"
           size={25}
           color="black"
-          onPress={() => {}}
+          onPress={deleteNote}
         />
         <TextButton onPress={addNewNote}>save</TextButton>
       </View>

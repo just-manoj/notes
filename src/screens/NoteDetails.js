@@ -6,7 +6,7 @@ import { LogBox } from "react-native";
 import DateHeader from "../UI/noteDetails/DateHeader";
 import Header from "../UI/noteDetails/Header";
 import NoteDetailsBody from "../UI/noteDetails/NoteDetailsBody";
-import { addNewNote, updateNote } from "../redux/NoteData";
+import { addNewNote, updateNote, deleteNote } from "../redux/NoteData";
 
 const NoteDetails = ({ navigation, route }) => {
   const dispath = useDispatch();
@@ -42,9 +42,14 @@ const NoteDetails = ({ navigation, route }) => {
     console.log(newNote);
   };
 
+  const deleteNoteHandler = () => {
+    if (route.params) dispath(deleteNote({ id: id }));
+    navigation.navigate("list");
+  };
+
   return (
     <View style={styles.container}>
-      <Header addNewNote={addNewNoteHandler} />
+      <Header addNewNote={addNewNoteHandler} deleteNote={deleteNoteHandler} />
       <DateHeader date={newDate} />
       <NoteDetailsBody
         changeInputValues={changeInputValuesHandler}
