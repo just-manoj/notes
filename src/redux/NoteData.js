@@ -27,7 +27,7 @@ const NoteData = createSlice({
       const oldNote = state.notes[index];
       const updatableNote = { ...oldNote, ...action.payload.note };
       state.notes.splice(index, 1);
-      state.notes.splice(index, 1, updatableNote);
+      state.notes.unshift(updatableNote);
     },
   },
 });

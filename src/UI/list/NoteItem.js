@@ -1,14 +1,23 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { dayFormat, timeFormat } from "../../utils/date";
 
 const NoteItem = (props) => {
   const { title, note, id, date, bgColor } = props;
+  const navigation = useNavigation();
+
+  const navigateDetailsPage = () => {
+    navigation.navigate("noteDetails", {
+      ...props,
+    });
+  };
 
   return (
     <Pressable
       key={id}
       style={[styles.container, { backgroundColor: bgColor }]}
+      onPress={navigateDetailsPage}
     >
       <Text style={styles.title}>{title}</Text>
       <View style={styles.noteContainer}>
