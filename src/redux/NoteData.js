@@ -34,5 +34,7 @@ const NoteData = createSlice({
 
 export const storeNotes = NoteData.actions.storeNotes;
 export const addNewNote = NoteData.actions.addNewNote;
+export const deleteNote = NoteData.actions.deleteNote;
+export const updateNote = NoteData.actions.updateNote;
 
 export default NoteData.reducer;
