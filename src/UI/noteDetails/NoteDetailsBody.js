@@ -1,9 +1,13 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TextInput } from "react-native";
+import React, { useEffect, useRef } from "react";
 
 import InputText from "../../components/InputText";
 
 const NoteDetailsBody = (props) => {
   const { changeInputValues, inputValues } = props;
+
+  const noteInput = React.createRef();
+
   return (
     <>
       <View style={styles.inputContainer}>
@@ -13,6 +17,9 @@ const NoteDetailsBody = (props) => {
           autoFocus={true}
           onChangeText={changeInputValues.bind(this, "title")}
           value={inputValues.title}
+          returnKeyType="next"
+          onSubmitEditing={() => noteInput.current.focus()}
+          blurOnSubmit={false}
         />
       </View>
       <View style={styles.inputContainer}>
@@ -22,6 +29,7 @@ const NoteDetailsBody = (props) => {
           multiline={true}
           onChangeText={changeInputValues.bind(this, "note")}
           value={inputValues.note}
+          ref={noteInput}
         />
       </View>
     </>
