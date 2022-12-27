@@ -11,11 +11,16 @@ import { addNewNote, updateNote, deleteNote } from "../redux/NoteData";
 const NoteDetails = ({ navigation, route }) => {
   const dispath = useDispatch();
   const { id, title, note, bgColor, date } = { ...route.params };
+
+  const oldTitle = title;
+
+  const oldNote = note;
+  const newDate = date ? date : new Date();
+
   const [inputValues, setInputValues] = useState({
     title: title ? title : "",
     note: note ? note : "",
   });
-  const newDate = date ? date : new Date();
 
   LogBox.ignoreLogs([
     //Non-serializable warning for passing Date
@@ -35,8 +40,17 @@ const NoteDetails = ({ navigation, route }) => {
       note: inputValues.note,
       date: new Date(),
     };
-    if (!route.params) dispath(addNewNote({ note: newNote }));
-    else dispath(updateNote({ note: newNote }));
+    if (
+      !(
+        (oldTitle === inputValues.title && oldNote === inputValues.note) ||
+        (inputValues.note == "" && inputValues.title == "")
+      )
+    ) {
+      console.log(oldNote);
+      console.log(oldTitle);
+      if (!route.params) dispath(addNewNote({ note: newNote }));
+      else dispath(updateNote({ note: newNote }));
+    }
     navigation.navigate("list");
   };
 
