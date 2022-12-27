@@ -8,7 +8,7 @@ const DateHeader = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.date}> {timeFormat(date)}</Text>
-      <Text style={styles.date}>{dateFormat(date)}</Text>
+      <Text style={styles.date}> {dateFormat(date)}</Text>
     </View>
   );
 };
