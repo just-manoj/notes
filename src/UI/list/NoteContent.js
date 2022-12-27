@@ -1,6 +1,7 @@
 import { View, ScrollView, StyleSheet } from "react-native";
 
 import NoteItem from "./NoteItem";
+import { firstColor, secondColor } from "../../utils/colors";
 
 const NoteContent = (props) => {
   const { notes } = props;
@@ -11,15 +12,15 @@ const NoteContent = (props) => {
         <View style={[styles.full, styles.leftItemContainer]}>
           {notes
             .filter((_, index) => index % 2 !== 1)
-            .map((item) => (
-              <NoteItem {...item} />
+            .map((item, index) => (
+              <NoteItem {...item} bgColor={firstColor[index % 5]} />
             ))}
         </View>
         <View style={[styles.full, styles.rightIemContainer]}>
           {notes
             .filter((_, index) => index % 2)
-            .map((item) => (
-              <NoteItem {...item} />
+            .map((item, index) => (
+              <NoteItem {...item} bgColor={secondColor[index % 5]} />
             ))}
         </View>
       </View>
