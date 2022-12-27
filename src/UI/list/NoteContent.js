@@ -1,4 +1,4 @@
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 
 import NoteItem from "./NoteItem";
 import { firstColor, secondColor } from "../../utils/colors";
@@ -6,6 +6,13 @@ import { firstColor, secondColor } from "../../utils/colors";
 const NoteContent = (props) => {
   const { notes } = props;
 
+  if (notes.length < 1) {
+    return (
+      <View style={styles.empty}>
+        <Text style={styles.text}>Empty List!</Text>
+      </View>
+    );
+  }
   return (
     <ScrollView style={styles.scroll}>
       <View style={styles.container}>
@@ -31,6 +38,12 @@ const NoteContent = (props) => {
 export default NoteContent;
 
 const styles = StyleSheet.create({
+  empty: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: { fontSize: 19 },
   scroll: {
     width: "100%",
     marginTop: 10,
