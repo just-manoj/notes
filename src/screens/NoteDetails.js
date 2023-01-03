@@ -7,6 +7,8 @@ import DateHeader from "../UI/noteDetails/DateHeader";
 import Header from "../UI/noteDetails/Header";
 import NoteDetailsBody from "../UI/noteDetails/NoteDetailsBody";
 import { addNewNote, updateNote, deleteNote } from "../redux/NoteData";
+import { insertDataToDb } from "../utils/dataBase";
+import Notes from "../utils/Notes";
 
 const NoteDetails = ({ navigation, route }) => {
   const dispath = useDispatch();
@@ -33,25 +35,27 @@ const NoteDetails = ({ navigation, route }) => {
     });
   };
 
-  const addNewNoteHandler = () => {
-    const newNote = {
-      id: id ? id : new Date().toString() + Math.random() * 100,
-      title: inputValues.title,
-      note: inputValues.note,
-      date: new Date(),
-    };
+  const addNewNoteHandler = async () => {
+    const newNote = new Notes(
+      id ? id : new Date().toString() + Math.random() * 100,
+      inputValues.title,
+      inputValues.note,
+      new Date()
+    );
     if (
       !(
         (oldTitle === inputValues.title && oldNote === inputValues.note) ||
         (inputValues.note == "" && inputValues.title == "")
       )
     ) {
-      console.log(oldNote);
-      console.log(oldTitle);
-      if (!route.params) dispath(addNewNote({ note: newNote }));
-      else dispath(updateNote({ note: newNote }));
+      if (!route.params) {
+        dispath(addNewNote({ note: newNote }));
+        await insertDataToDb(newNote);
+      } else {
+        dispath(updateNote({ note: newNote }));
+      }
+      navigation.navigate("list");
     }
-    navigation.navigate("list");
   };
 
   const deleteNoteHandler = () => {

@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
 
 import NoteContent from "../UI/list/NoteContent";
 import SearchBar from "../UI/list/SearchBar";
-import { notes } from "../utils/constNotes";
 import FlatButton from "../UI/button/FlatButton";
 import { storeNotes } from "../redux/NoteData";
+import { fetchAllNotes } from "../utils/dataBase";
 
 const List = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
-  const noteDetails = useSelector((state) => state.noteData.notes);
+  const isFocused = useIsFocused();
+
+  const [notesData, setNotesData] = useState([]);
 
   const clearSearchText = () => {
     setSearchText("");
@@ -19,10 +22,12 @@ const List = ({ navigation }) => {
 
   useEffect(() => {
     const storeNotesDetails = async () => {
-      dispatch(storeNotes({ noteDetails: notes }));
+      const fetchedNotes = await fetchAllNotes();
+      setNotesData(fetchedNotes);
+      dispatch(storeNotes({ noteDetails: fetchedNotes }));
     };
-    storeNotesDetails();
-  }, []);
+    if (isFocused) storeNotesDetails();
+  }, [setNotesData, isFocused, storeNotes]);
 
   const naviationHandler = () => {
     navigation.navigate("noteDetails");
@@ -35,7 +40,7 @@ const List = ({ navigation }) => {
         setSearchText={setSearchText}
         clearSearchText={clearSearchText}
       />
-      <NoteContent notes={noteDetails} />
+      <NoteContent notes={notesData} />
       <FlatButton onPress={naviationHandler} />
     </View>
   );
