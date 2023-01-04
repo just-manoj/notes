@@ -28,13 +28,14 @@ export const initDb = () => {
 };
 
 export const insertDataToDb = (notes) => {
+  console.log(notes.title, "  ", notes.date);
   const promise = new Promise((resolve, reject) => {
     dataBase.transaction((tx) => {
       tx.executeSql(
         `
         INSERT INTO notesMainTable (title,note,date) values(?,?,?)
         `,
-        [notes.title, notes.note, notes.date.toDateString()],
+        [notes.title, notes.note, notes.date.toString()],
         (_, res) => {
           resolve(res);
         },
@@ -60,8 +61,8 @@ export const fetchAllNotes = () => {
             notes.push(
               new Notes(note.id, note.title, note.note, new Date(note.date))
             );
+            console.log(note.title, "   ", note.date);
           }
-
           resolve(notes);
         },
         (_, error) => {
@@ -99,7 +100,7 @@ export const updateNoteInDb = (updatedNote) => {
         [
           updatedNote.title,
           updatedNote.note,
-          updatedNote.date.toDateString(),
+          updatedNote.date.toString(),
           updatedNote.id,
         ],
         (_, res) => {
