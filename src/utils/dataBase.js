@@ -72,3 +72,21 @@ export const fetchAllNotes = () => {
   });
   return promise;
 };
+
+export const deleteNoteInDb = (id) => {
+  const promise = new Promise((resolve, reject) => {
+    dataBase.transaction((tx) => {
+      tx.executeSql(
+        `DELETE FROM notesMainTable WHERE id=${id}`,
+        [],
+        (_, res) => {
+          resolve(res);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+  return promise;
+};

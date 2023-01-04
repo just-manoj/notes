@@ -6,8 +6,8 @@ import { LogBox } from "react-native";
 import DateHeader from "../UI/noteDetails/DateHeader";
 import Header from "../UI/noteDetails/Header";
 import NoteDetailsBody from "../UI/noteDetails/NoteDetailsBody";
-import { addNewNote, updateNote, deleteNote } from "../redux/NoteData";
-import { insertDataToDb } from "../utils/dataBase";
+import { updateNote } from "../redux/NoteData";
+import { deleteNoteInDb, insertDataToDb } from "../utils/dataBase";
 import Notes from "../utils/Notes";
 
 const NoteDetails = ({ navigation, route }) => {
@@ -49,17 +49,18 @@ const NoteDetails = ({ navigation, route }) => {
       )
     ) {
       if (!route.params) {
-        dispath(addNewNote({ note: newNote }));
         await insertDataToDb(newNote);
       } else {
         dispath(updateNote({ note: newNote }));
       }
-      navigation.navigate("list");
     }
+    navigation.navigate("list");
   };
 
   const deleteNoteHandler = () => {
-    if (route.params) dispath(deleteNote({ id: id }));
+    if (route.params) {
+      deleteNoteInDb(id);
+    }
     navigation.navigate("list");
   };
 
