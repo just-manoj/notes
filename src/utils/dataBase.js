@@ -51,7 +51,7 @@ export const fetchAllNotes = () => {
   const promise = new Promise((resolve, reject) => {
     dataBase.transaction((tx) => {
       tx.executeSql(
-        `SELECT * FROM notesMainTable`,
+        `SELECT * FROM notesMainTable ORDER BY date DESC`,
         [],
         (_, res) => {
           const notes = [];
@@ -79,6 +79,29 @@ export const deleteNoteInDb = (id) => {
       tx.executeSql(
         `DELETE FROM notesMainTable WHERE id=${id}`,
         [],
+        (_, res) => {
+          resolve(res);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+  return promise;
+};
+
+export const updateNoteInDb = (updatedNote) => {
+  const promise = new Promise((resolve, reject) => {
+    dataBase.transaction((tx) => {
+      tx.executeSql(
+        `UPDATE notesMainTable SET title=?,note=?,date=? WHERE id=?`,
+        [
+          updatedNote.title,
+          updatedNote.note,
+          updatedNote.date.toDateString(),
+          updatedNote.id,
+        ],
         (_, res) => {
           resolve(res);
         },

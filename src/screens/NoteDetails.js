@@ -6,8 +6,11 @@ import { LogBox } from "react-native";
 import DateHeader from "../UI/noteDetails/DateHeader";
 import Header from "../UI/noteDetails/Header";
 import NoteDetailsBody from "../UI/noteDetails/NoteDetailsBody";
-import { updateNote } from "../redux/NoteData";
-import { deleteNoteInDb, insertDataToDb } from "../utils/dataBase";
+import {
+  deleteNoteInDb,
+  insertDataToDb,
+  updateNoteInDb,
+} from "../utils/dataBase";
 import Notes from "../utils/Notes";
 
 const NoteDetails = ({ navigation, route }) => {
@@ -51,7 +54,7 @@ const NoteDetails = ({ navigation, route }) => {
       if (!route.params) {
         await insertDataToDb(newNote);
       } else {
-        dispath(updateNote({ note: newNote }));
+        updateNoteInDb(newNote);
       }
     }
     navigation.navigate("list");
