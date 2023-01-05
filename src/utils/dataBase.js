@@ -27,27 +27,6 @@ export const initDb = () => {
   return promise;
 };
 
-export const insertDataToDb = (notes) => {
-  console.log(notes.title, "  ", notes.date);
-  const promise = new Promise((resolve, reject) => {
-    dataBase.transaction((tx) => {
-      tx.executeSql(
-        `
-        INSERT INTO notesMainTable (title,note,date) values(?,?,?)
-        `,
-        [notes.title, notes.note, notes.date.toString()],
-        (_, res) => {
-          resolve(res);
-        },
-        (_, error) => {
-          reject(error);
-        }
-      );
-    });
-  });
-  return promise;
-};
-
 export const fetchAllNotes = () => {
   const promise = new Promise((resolve, reject) => {
     dataBase.transaction((tx) => {
@@ -74,12 +53,33 @@ export const fetchAllNotes = () => {
   return promise;
 };
 
+export const insertDataToDb = (notes) => {
+  console.log(notes.title, "  ", notes.date);
+  const promise = new Promise((resolve, reject) => {
+    dataBase.transaction((tx) => {
+      tx.executeSql(
+        `
+        INSERT INTO notesMainTable (title,note,date) values(?,?,?)
+        `,
+        [notes.title, notes.note, notes.date.toString()],
+        (_, res) => {
+          resolve(res);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+  return promise;
+};
+
 export const deleteNoteInDb = (id) => {
   const promise = new Promise((resolve, reject) => {
     dataBase.transaction((tx) => {
       tx.executeSql(
-        `DELETE FROM notesMainTable WHERE id=${id}`,
-        [],
+        `DELETE FROM notesMainTable WHERE id=?`,
+        [id],
         (_, res) => {
           resolve(res);
         },

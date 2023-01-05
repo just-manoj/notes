@@ -1,6 +1,5 @@
 import { View, StyleSheet } from "react-native";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { LogBox } from "react-native";
 
 import DateHeader from "../UI/noteDetails/DateHeader";
@@ -14,12 +13,11 @@ import {
 import Notes from "../utils/Notes";
 
 const NoteDetails = ({ navigation, route }) => {
-  const dispath = useDispatch();
   const { id, title, note, bgColor, date } = { ...route.params };
 
   const oldTitle = title;
-
   const oldNote = note;
+
   const newDate = date ? date : new Date();
 
   const [inputValues, setInputValues] = useState({
@@ -40,7 +38,7 @@ const NoteDetails = ({ navigation, route }) => {
 
   const addNewNoteHandler = async () => {
     const newNote = new Notes(
-      id ? id : new Date().toString() + Math.random() * 100,
+      id ? id : "",
       inputValues.title,
       inputValues.note,
       new Date()
