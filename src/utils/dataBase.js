@@ -40,7 +40,6 @@ export const fetchAllNotes = () => {
             notes.push(
               new Notes(note.id, note.title, note.note, new Date(note.date))
             );
-            console.log(note.title, "   ", note.date);
           }
           resolve(notes);
         },
@@ -52,9 +51,34 @@ export const fetchAllNotes = () => {
   });
   return promise;
 };
+export const fetchOneNote = (id) => {
+  const promise = new Promise((resolve, reject) => {
+    dataBase.transaction((tx) => {
+      tx.executeSql(
+        `SELECT * FROM notesMainTable WHERE id=?`,
+        [id],
+        (_, res) => {
+          const storeDummyNote = res.rows._array[0];
+          const note = new Notes(
+            storeDummyNote.id,
+            storeDummyNote.title,
+            storeDummyNote.note,
+            new Date(storeDummyNote.date)
+          );
+          // console.log(note);
+          resolve(note);
+        },
+        (_, error) => {
+          console.log(error);
+          reject(error);
+        }
+      );
+    });
+  });
+  return promise;
+};
 
 export const insertDataToDb = (notes) => {
-  console.log(notes.title, "  ", notes.date);
   const promise = new Promise((resolve, reject) => {
     dataBase.transaction((tx) => {
       tx.executeSql(

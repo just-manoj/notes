@@ -8,9 +8,7 @@ const NoteItem = (props) => {
   const navigation = useNavigation();
 
   const navigateDetailsPage = () => {
-    navigation.navigate("noteDetails", {
-      ...props,
-    });
+    navigation.navigate("noteDetails", { id: id, bgColor: bgColor });
   };
 
   return (

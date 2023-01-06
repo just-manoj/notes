@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LogBox } from "react-native";
 
 import DateHeader from "../UI/noteDetails/DateHeader";
@@ -7,22 +7,23 @@ import Header from "../UI/noteDetails/Header";
 import NoteDetailsBody from "../UI/noteDetails/NoteDetailsBody";
 import {
   deleteNoteInDb,
+  fetchOneNote,
   insertDataToDb,
   updateNoteInDb,
 } from "../utils/dataBase";
 import Notes from "../utils/Notes";
 
 const NoteDetails = ({ navigation, route }) => {
-  const { id, title, note, bgColor, date } = { ...route.params };
+  const { id, bgColor } = { ...route.params };
 
-  const oldTitle = title;
-  const oldNote = note;
-
-  const newDate = date ? date : new Date();
-
+  const [oldNoteData, setOldNoteData] = useState({
+    title: "",
+    note: "",
+  });
   const [inputValues, setInputValues] = useState({
-    title: title ? title : "",
-    note: note ? note : "",
+    title: "",
+    note: "",
+    date: new Date(),
   });
 
   LogBox.ignoreLogs([
@@ -45,16 +46,17 @@ const NoteDetails = ({ navigation, route }) => {
     );
     if (
       !(
-        (oldTitle === inputValues.title && oldNote === inputValues.note) ||
-        (inputValues.note == "" && inputValues.title == "")
+        oldNoteData.title === inputValues.title &&
+        oldNoteData.note === inputValues.note
       )
     ) {
-      if (!route.params) {
+      if (!id) {
         await insertDataToDb(newNote);
       } else {
-        updateNoteInDb(newNote);
+        await updateNoteInDb(newNote);
       }
     }
+    if (inputValues.note == "" && inputValues.title == "") deleteNoteHandler();
     navigation.navigate("list");
   };
 
@@ -65,10 +67,24 @@ const NoteDetails = ({ navigation, route }) => {
     navigation.navigate("list");
   };
 
+  useEffect(() => {
+    const fetchOneNoteData = async () => {
+      const thisNote = await fetchOneNote(id);
+      setOldNoteData({ note: thisNote.note, title: thisNote.title });
+      setInputValues({
+        title: thisNote.title,
+        note: thisNote.note,
+        date: new Date(thisNote.date),
+      });
+    };
+    if (id) {
+      fetchOneNoteData();
+    }
+  }, [setOldNoteData, setInputValues, fetchOneNote]);
   return (
     <View style={[styles.container, { backgroundColor: bgColor }]}>
       <Header addNewNote={addNewNoteHandler} deleteNote={deleteNoteHandler} />
-      <DateHeader date={newDate} />
+      <DateHeader date={inputValues.date} />
       <NoteDetailsBody
         changeInputValues={changeInputValuesHandler}
         inputValues={inputValues}
