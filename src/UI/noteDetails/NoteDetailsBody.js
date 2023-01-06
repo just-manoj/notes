@@ -14,7 +14,6 @@ const NoteDetailsBody = (props) => {
         <InputText
           style={styles.title}
           placeholder="Title"
-          autoFocus={true}
           onChangeText={changeInputValues.bind(this, "title")}
           value={inputValues.title}
           returnKeyType="next"
@@ -27,6 +26,7 @@ const NoteDetailsBody = (props) => {
           style={styles.note}
           placeholder="Note here"
           multiline={true}
+          autoFocus={true}
           onChangeText={changeInputValues.bind(this, "note")}
           value={inputValues.note}
           ref={noteInput}
