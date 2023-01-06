@@ -19,9 +19,13 @@ const NoteItem = (props) => {
       style={[styles.container, { backgroundColor: bgColor }]}
       onPress={navigateDetailsPage}
     >
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title} numberOfLines={1}>
+        {title}
+      </Text>
       <View style={styles.noteContainer}>
-        <Text style={styles.note}>{note}</Text>
+        <Text style={styles.note} numberOfLines={5}>
+          {note}
+        </Text>
       </View>
       <View style={styles.dateContainer}>
         <Text style={styles.date}>{dayFormat(date)}</Text>

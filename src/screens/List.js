@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 
 import NoteContent from "../UI/list/NoteContent";
@@ -11,7 +10,6 @@ import { fetchAllNotes } from "../utils/dataBase";
 
 const List = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
-  const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
   const [notesData, setNotesData] = useState([]);
@@ -23,8 +21,14 @@ const List = ({ navigation }) => {
   useEffect(() => {
     const storeNotesDetails = async () => {
       const fetchedNotes = await fetchAllNotes();
+      fetchedNotes.filter((n) => {
+        if (n.title === "") {
+          n.title = n.note.split("\n")[0];
+          n.note = n.note.slice(n.note.indexOf("\n"), n.note.length);
+        }
+        n.note = n.note.replace(/^\s*$(?:\r\n?|\n)/gm, "");
+      });
       setNotesData(fetchedNotes);
-      dispatch(storeNotes({ noteDetails: fetchedNotes }));
     };
     if (isFocused) storeNotesDetails();
   }, [setNotesData, isFocused, storeNotes]);
