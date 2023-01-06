@@ -23,9 +23,11 @@ const NoteItem = (props) => {
         {title}
       </Text>
       <View style={styles.noteContainer}>
-        <Text style={styles.note} numberOfLines={5}>
-          {note}
-        </Text>
+        {note.length != "" && (
+          <Text style={styles.note} numberOfLines={5}>
+            {note}
+          </Text>
+        )}
       </View>
       <View style={styles.dateContainer}>
         <Text style={styles.date}>{dayFormat(date)}</Text>
