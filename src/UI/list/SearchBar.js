@@ -1,16 +1,16 @@
 import { View, StyleSheet } from "react-native";
-import { useState } from "react";
 
 import Title from "../../components/Title";
 import Search from "../../components/Search";
 
 const SearchBar = (props) => {
-  const { searchText, setSearchText, clearSearchText } = props;
-  const [titleState, setTitleState] = useState(false);
-
-  const changeTitleHandler = () => {
-    setTitleState(!titleState);
-  };
+  const {
+    searchText,
+    setSearchText,
+    clearSearchText,
+    titleState,
+    changeTitleHandler,
+  } = props;
 
   return (
     <View style={styles.container}>
