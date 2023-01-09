@@ -13,8 +13,11 @@ const List = ({ navigation }) => {
   const isFocused = useIsFocused();
 
   const [notesData, setNotesData] = useState([]);
+  const [tempNotesData, setTempNotesData] = useState([]);
+  const [titleState, setTitleState] = useState(false);
 
   const clearSearchText = () => {
+    setNotesData(tempNotesData);
     setSearchText("");
   };
 
@@ -28,7 +31,9 @@ const List = ({ navigation }) => {
         }
         n.note = n.note.replace(/^\s*$(?:\r\n?|\n)/gm, "");
       });
+
       setNotesData(fetchedNotes);
+      setTempNotesData(fetchedNotes);
     };
     if (isFocused) storeNotesDetails();
   }, [setNotesData, isFocused, storeNotes]);
@@ -37,15 +42,35 @@ const List = ({ navigation }) => {
     navigation.navigate("noteDetails");
   };
 
+  const getSearchInput = (inp) => {
+    setSearchText(inp);
+    setNotesData(
+      tempNotesData.filter((item) => {
+        return (
+          item.note.toUpperCase().indexOf(inp.toUpperCase()) !== -1 ||
+          item.title.toUpperCase().indexOf(inp.toUpperCase()) !== -1
+        );
+      })
+    );
+  };
+
+  const changeTitleHandler = () => {
+    setNotesData(tempNotesData);
+    setSearchText("");
+    setTitleState(!titleState);
+  };
+
   return (
     <View style={styles.container}>
       <SearchBar
+        changeTitleHandler={changeTitleHandler}
+        titleState={titleState}
         searchText={searchText}
-        setSearchText={setSearchText}
+        setSearchText={getSearchInput}
         clearSearchText={clearSearchText}
       />
       <NoteContent notes={notesData} />
-      <FlatButton onPress={naviationHandler} />
+      {!titleState && <FlatButton onPress={naviationHandler} />}
     </View>
   );
 };
