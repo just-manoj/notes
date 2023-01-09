@@ -65,11 +65,9 @@ export const fetchOneNote = (id) => {
             storeDummyNote.note,
             new Date(storeDummyNote.date)
           );
-          // console.log(note);
           resolve(note);
         },
         (_, error) => {
-          console.log(error);
           reject(error);
         }
       );
