@@ -22,3 +22,9 @@ export const timeFormat = (date) => {
 
   return `${hour}:${minute} ${AmPm}`;
 };
+
+export const dateForInsertToDB = (date) => {
+  return `${date.getFullYear()}-${
+    date.getMonth() + 1
+  }-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+};
