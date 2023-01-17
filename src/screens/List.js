@@ -5,7 +5,6 @@ import { useIsFocused } from "@react-navigation/native";
 import NoteContent from "../UI/list/NoteContent";
 import SearchBar from "../UI/list/SearchBar";
 import FlatButton from "../UI/button/FlatButton";
-import { storeNotes } from "../redux/NoteData";
 import { fetchAllNotes } from "../utils/dataBase";
 
 const List = ({ navigation }) => {
@@ -27,7 +26,7 @@ const List = ({ navigation }) => {
       fetchedNotes.filter((n) => {
         if (n.title === "") {
           n.title = n.note.split("\n")[0];
-          n.note = n.note.slice(n.note.indexOf("\n"), n.note.length);
+          n.note = n.note.slice(n.note.indexOf("\n"), n.note.length-1);
         }
         n.note = n.note.replace(/^\s*$(?:\r\n?|\n)/gm, "");
       });
@@ -36,7 +35,7 @@ const List = ({ navigation }) => {
       setTempNotesData(fetchedNotes);
     };
     if (isFocused) storeNotesDetails();
-  }, [setNotesData, isFocused, storeNotes]);
+  }, [setNotesData, isFocused]);
 
   const naviationHandler = () => {
     navigation.navigate("noteDetails");

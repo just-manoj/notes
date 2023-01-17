@@ -1,10 +1,9 @@
 import { StyleSheet, View } from "react-native";
-import { Provider } from "react-redux";
+import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import AppLoading from "expo-app-loading";
 
 import Navigation from "./src/navigation/Navigation";
-import { store } from "./src/redux/store";
 import { initDb } from "./src/utils/dataBase";
 
 export default function App() {
@@ -26,11 +25,10 @@ export default function App() {
 
   return (
     <>
-      <Provider store={store}>
-        <View style={styles.container}>
-          <Navigation />
-        </View>
-      </Provider>
+      <StatusBar style="auto" />
+      <View style={styles.container}>
+        <Navigation />
+      </View>
     </>
   );
 }
