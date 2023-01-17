@@ -8,7 +8,7 @@ const DateHeader = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.date}> {timeFormat(date)}</Text>
-      <Text style={styles.date}> {dateFormat(date)}</Text>
+      <Text style={styles.date}>{dateFormat(date)}</Text>
     </View>
   );
 };
@@ -17,7 +17,7 @@ export default DateHeader;
 
 const styles = StyleSheet.create({
   container: {
-    width: "33%",
+    width: "26%",
     marginLeft: 10,
     flexDirection: "row",
     justifyContent: "space-between",
