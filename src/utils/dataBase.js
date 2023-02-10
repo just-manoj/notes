@@ -1,6 +1,7 @@
 import * as SQLite from "expo-sqlite";
 
 import Notes from "./Notes";
+import { dateForExportToDB } from "./date";
 
 const dataBase = SQLite.openDatabase("notesApp111.db");
 
@@ -12,7 +13,7 @@ export const initDb = () => {
                 id INTEGER PRIMARY KEY NOT NULL,
                 title TEXT NOT NULL,
                 note TEXT NOT NULL,
-                date DATETIME NOT NULL
+                date date NOT NULL
             )`,
         [],
         (_, res) => {
@@ -31,14 +32,19 @@ export const fetchAllNotes = () => {
   const promise = new Promise((resolve, reject) => {
     dataBase.transaction((tx) => {
       tx.executeSql(
-        `SELECT * FROM notesMainTable ORDER BY date DESC`,
+        `SELECT * FROM notesMainTable ORDER BY date desc`,
         [],
         (_, res) => {
           const notes = [];
 
           for (const note of res.rows._array) {
             notes.push(
-              new Notes(note.id, note.title, note.note, new Date(note.date))
+              new Notes(
+                note.id,
+                note.title,
+                note.note,
+                dateForExportToDB(note.date)
+              )
             );
           }
           resolve(notes);
@@ -63,7 +69,7 @@ export const fetchOneNote = (id) => {
             storeDummyNote.id,
             storeDummyNote.title,
             storeDummyNote.note,
-            new Date(storeDummyNote.date)
+            dateForExportToDB(storeDummyNote.date)
           );
           resolve(note);
         },
@@ -77,13 +83,14 @@ export const fetchOneNote = (id) => {
 };
 
 export const insertDataToDb = (notes) => {
+  // console.log("insert note date", notes.date);
   const promise = new Promise((resolve, reject) => {
     dataBase.transaction((tx) => {
       tx.executeSql(
         `
-        INSERT INTO notesMainTable (title,note,date) values(?,?,?)
+        INSERT INTO notesMainTable (title,note,date) values(?,?,datetime())
         `,
-        [notes.title, notes.note, notes.date.toString()],
+        [notes.title, notes.note],
         (_, res) => {
           resolve(res);
         },
@@ -118,13 +125,8 @@ export const updateNoteInDb = (updatedNote) => {
   const promise = new Promise((resolve, reject) => {
     dataBase.transaction((tx) => {
       tx.executeSql(
-        `UPDATE notesMainTable SET title=?,note=?,date=? WHERE id=?`,
-        [
-          updatedNote.title,
-          updatedNote.note,
-          updatedNote.date.toString(),
-          updatedNote.id,
-        ],
+        `UPDATE notesMainTable SET title=?,note=?,date=datetime() WHERE id=?`,
+        [updatedNote.title, updatedNote.note, updatedNote.id],
         (_, res) => {
           resolve(res);
         },

@@ -23,8 +23,7 @@ export const timeFormat = (date) => {
   return `${hour}:${minute} ${AmPm}`;
 };
 
-export const dateForInsertToDB = (date) => {
-  return `${date.getFullYear()}-${
-    date.getMonth() + 1
-  }-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+export const dateForExportToDB = (date) => {
+  const d = date.split(" ");
+  return new Date(d[0] + "T" + d[1] + "Z");
 };
