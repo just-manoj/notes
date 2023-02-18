@@ -26,7 +26,7 @@ const List = ({ navigation }) => {
       fetchedNotes.filter((n) => {
         if (n.title === "") {
           n.title = n.note.split("\n")[0];
-          n.note = n.note.slice(n.note.indexOf("\n"), n.note.length-1);
+          n.note = n.note.slice(n.note.indexOf("\n"), n.note.length - 1);
         }
         n.note = n.note.replace(/^\s*$(?:\r\n?|\n)/gm, "");
       });
@@ -34,7 +34,13 @@ const List = ({ navigation }) => {
       setNotesData(fetchedNotes);
       setTempNotesData(fetchedNotes);
     };
-    if (isFocused) storeNotesDetails();
+    if (isFocused) {
+      if (!titleState) {
+        storeNotesDetails();
+      }
+      // getSearchInput(searchText);
+      console.log(searchText);
+    }
   }, [setNotesData, isFocused]);
 
   const naviationHandler = () => {
