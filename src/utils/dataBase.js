@@ -83,7 +83,6 @@ export const fetchOneNote = (id) => {
 };
 
 export const insertDataToDb = (notes) => {
-  // console.log("insert note date", notes.date);
   const promise = new Promise((resolve, reject) => {
     dataBase.transaction((tx) => {
       tx.executeSql(

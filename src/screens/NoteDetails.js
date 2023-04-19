@@ -14,7 +14,7 @@ import {
 import Notes from "../utils/Notes";
 
 const NoteDetails = ({ navigation, route }) => {
-  const { id, bgColor } = { ...route.params };
+  const { id, bgColor, updateLocal } = { ...route.params };
 
   const [oldNoteData, setOldNoteData] = useState({
     title: "",
@@ -53,6 +53,7 @@ const NoteDetails = ({ navigation, route }) => {
       if (!id) {
         await insertDataToDb(newNote);
       } else {
+        updateLocal(newNote);
         await updateNoteInDb(newNote);
       }
     }

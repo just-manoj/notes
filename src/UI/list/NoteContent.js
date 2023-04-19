@@ -4,7 +4,7 @@ import NoteItem from "./NoteItem";
 import { firstColor, secondColor } from "../../utils/colors";
 
 const NoteContent = (props) => {
-  const { notes } = props;
+  const { notes, updateLocal } = props;
 
   if (notes.length < 1) {
     return (
@@ -20,14 +20,24 @@ const NoteContent = (props) => {
           {notes
             .filter((_, index) => index % 2 !== 1)
             .map((item, index) => (
-              <NoteItem {...item} bgColor={firstColor[index % 5]} />
+              <NoteItem
+                {...item}
+                bgColor={firstColor[index % 5]}
+                key={item.id}
+                updateLocal={updateLocal}
+              />
             ))}
         </View>
         <View style={[styles.full, styles.rightIemContainer]}>
           {notes
             .filter((_, index) => index % 2)
             .map((item, index) => (
-              <NoteItem {...item} bgColor={secondColor[index % 5]} />
+              <NoteItem
+                {...item}
+                bgColor={secondColor[index % 5]}
+                key={item.id}
+                updateLocal={updateLocal}
+              />
             ))}
         </View>
       </View>

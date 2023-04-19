@@ -38,8 +38,6 @@ const List = ({ navigation }) => {
       if (!titleState) {
         storeNotesDetails();
       }
-      // getSearchInput(searchText);
-      console.log(searchText);
     }
   }, [setNotesData, isFocused]);
 
@@ -65,6 +63,15 @@ const List = ({ navigation }) => {
     setTitleState(!titleState);
   };
 
+  const updateLocal = (data) => {
+    const notesData2 = [...notesData];
+    const dataIndex = notesData2.findIndex((note) => note.id === data.id);
+    notesData2.splice(dataIndex, 1);
+    notesData2.unshift(data);
+    setNotesData(notesData2);
+    setTempNotesData(notesData2);
+  };
+
   return (
     <View style={styles.container}>
       <SearchBar
@@ -74,7 +81,7 @@ const List = ({ navigation }) => {
         setSearchText={getSearchInput}
         clearSearchText={clearSearchText}
       />
-      <NoteContent notes={notesData} />
+      <NoteContent notes={notesData} updateLocal={updateLocal} />
       {!titleState && <FlatButton onPress={naviationHandler} />}
     </View>
   );

@@ -4,11 +4,15 @@ import { useNavigation } from "@react-navigation/native";
 import { dayFormat, timeFormat } from "../../utils/date";
 
 const NoteItem = (props) => {
-  const { title, note, id, date, bgColor } = props;
+  const { title, note, id, date, bgColor, updateLocal } = props;
   const navigation = useNavigation();
 
   const navigateDetailsPage = () => {
-    navigation.navigate("noteDetails", { id: id, bgColor: bgColor });
+    navigation.navigate("noteDetails", {
+      id: id,
+      bgColor: bgColor,
+      updateLocal: updateLocal,
+    });
   };
 
   return (
