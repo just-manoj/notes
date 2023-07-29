@@ -1,4 +1,9 @@
-import { View, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView,
+} from "react-native";
 import React, { useEffect, useRef } from "react";
 
 import InputText from "../../components/InputText";
@@ -9,7 +14,7 @@ const NoteDetailsBody = (props) => {
   const noteInput = React.createRef();
 
   return (
-    <>
+    <KeyboardAvoidingView behavior="height" enabled>
       <View style={styles.inputContainer}>
         <InputText
           style={styles.title}
@@ -21,7 +26,7 @@ const NoteDetailsBody = (props) => {
           blurOnSubmit={false}
         />
       </View>
-      <View style={styles.inputContainer}>
+      <View style={[styles.inputContainer, {}]}>
         <InputText
           style={styles.note}
           placeholder="Note here"
@@ -32,7 +37,7 @@ const NoteDetailsBody = (props) => {
           ref={noteInput}
         />
       </View>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -50,5 +55,6 @@ const styles = StyleSheet.create({
   },
   note: {
     fontSize: 17,
+    marginBottom: 110,
   },
 });
