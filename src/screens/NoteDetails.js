@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text, BackHandler } from "react-native";
 import { useEffect, useState } from "react";
 import { LogBox } from "react-native";
 
@@ -14,7 +14,7 @@ import {
 import Notes from "../utils/Notes";
 
 const NoteDetails = ({ navigation, route }) => {
-  const { id, bgColor, updateLocal } = { ...route.params };
+  const { id, bgColor } = { ...route.params };
 
   const [oldNoteData, setOldNoteData] = useState({
     title: "",
@@ -26,10 +26,19 @@ const NoteDetails = ({ navigation, route }) => {
     date: new Date(),
   });
 
+  const [savingStatus, setSavingStatus] = useState(null);
+
+  const [noteId, setNoteId] = useState(id);
+
   LogBox.ignoreLogs([
     //Non-serializable warning for passing Date
     "Non-serializable values were found in the navigation state",
   ]);
+
+  const changeSavingStatus = (status) => {
+    if (status) setSavingStatus("Saving...");
+    else setSavingStatus("Saved.");
+  };
 
   const changeInputValuesHandler = (id, data) => {
     setInputValues((inputValue) => {
@@ -37,28 +46,28 @@ const NoteDetails = ({ navigation, route }) => {
     });
   };
 
-  const addNewNoteHandler = async () => {
+  const addNewNoteHandler = async (goBack) => {
     const newNote = new Notes(
-      id ? id : "",
+      noteId,
       inputValues.title,
       inputValues.note,
       new Date()
     );
+    // console.log(newNote);
     if (
       !(
         oldNoteData.title === inputValues.title &&
         oldNoteData.note === inputValues.note
       )
     ) {
-      if (!id) {
-        await insertDataToDb(newNote);
+      if (!noteId) {
+        const res = await insertDataToDb(newNote);
+        setNoteId(res.insertId);
       } else {
-        updateLocal(newNote);
         await updateNoteInDb(newNote);
       }
     }
-    if (inputValues.note == "" && inputValues.title == "") deleteNoteHandler();
-    navigation.navigate("list");
+    if (goBack) navigation.navigate("list");
   };
 
   const deleteNoteHandler = () => {
@@ -82,14 +91,22 @@ const NoteDetails = ({ navigation, route }) => {
       fetchOneNoteData();
     }
   }, [setOldNoteData, setInputValues, fetchOneNote]);
+
   return (
     <View style={[styles.container, { backgroundColor: bgColor }]}>
       <Header addNewNote={addNewNoteHandler} deleteNote={deleteNoteHandler} />
       <DateHeader date={inputValues.date} />
       <NoteDetailsBody
+        changeSavingStatus={changeSavingStatus}
+        addNewNote={addNewNoteHandler}
         changeInputValues={changeInputValuesHandler}
         inputValues={inputValues}
       />
+      <View style={styles.savingsTagContainer}>
+        <Text style={styles.savings}>
+          {savingStatus !== null && savingStatus}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -98,8 +115,18 @@ export default NoteDetails;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 5,
     paddingTop: 30,
     paddingHorizontal: 5,
+    paddingBottom: 13,
+  },
+  savingsTagContainer: {
+    position: "absolute",
+    bottom: 10,
+    right: 10,
+  },
+  savings: {
+    fontSize: 15,
+    fontWeight: "400",
   },
 });

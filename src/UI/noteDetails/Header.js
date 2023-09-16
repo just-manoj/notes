@@ -1,21 +1,18 @@
 import { View, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 import IconButton from "../button/IconButton";
 import TextButton from "../button/TextButton";
 
 const Header = (props) => {
   const { addNewNote, deleteNote } = props;
-  const navigation = useNavigation();
+
   return (
-    <View style={styles.iconContainer}>
+    <View style={[styles.iconContainer]}>
       <IconButton
         name="chevron-back"
         size={30}
         color="black"
-        onPress={() => {
-          navigation.goBack();
-        }}
+        onPress={() => addNewNote(true)}
       />
       <View
         style={[
@@ -31,7 +28,7 @@ const Header = (props) => {
           color="black"
           onPress={deleteNote}
         />
-        <TextButton onPress={addNewNote}>save</TextButton>
+        <TextButton onPress={() => addNewNote(true)}>save</TextButton>
       </View>
     </View>
   );
