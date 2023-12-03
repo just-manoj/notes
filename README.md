@@ -63,14 +63,19 @@ Follow these steps to get the app up and running on your local machine:
 
 For any inquiries, please contact iammanojofficial@gmail.com
 
-List Screen - Empty Notes![Screenshot_1701610280](https://github.com/manoj-dev-001/notes/assets/111769769/2d1001d7-31a9-4bb0-8608-fc670003c7f0)
+<p>List Screen - Empty Notes!</p><img src="https://github.com/manoj-dev-001/notes/assets/111769769/2d1001d7-31a9-4bb0-8608-fc670003c7f0" width="360" height="750">
 
-Creating Notes![Screenshot_1701609827](https://github.com/manoj-dev-001/notes/assets/111769769/3114e0ba-f4db-4b6d-9fe5-dced28b9783f)
 
-Note automattically save to the database![Screenshot_1701609832](https://github.com/manoj-dev-001/notes/assets/111769769/2945d244-feab-4a5c-96a9-40c8464f2798)
+<p>Creating Notes!</p><img src="https://github.com/manoj-dev-001/notes/assets/111769769/3114e0ba-f4db-4b6d-9fe5-dced28b9783f" width="360" height="750">
 
-List Screen Read All note data from database![Screenshot_1701610152](https://github.com/manoj-dev-001/notes/assets/111769769/608d42d9-42f7-4e5b-ace7-5a769f9b7fcc)
 
-Update 'Fitness Goals' note![Screenshot_1701610239](https://github.com/manoj-dev-001/notes/assets/111769769/08ce8d3f-a9ef-4dc3-8211-343e6d57922b)
+<p>Note automattically save to the database!</p><img src="https://github.com/manoj-dev-001/notes/assets/111769769/2945d244-feab-4a5c-96a9-40c8464f2798" width="360" height="750">
 
-Delete the Anime note![Screenshot_1701610246](https://github.com/manoj-dev-001/notes/assets/111769769/c417220d-b66f-4473-8c7e-c6d24f1654b3)
+
+<p>List Screen Read All note data from database!</p><img src="https://github.com/manoj-dev-001/notes/assets/111769769/608d42d9-42f7-4e5b-ace7-5a769f9b7fcc" width="360" height="750">
+
+
+<p>Update 'Fitness Goals' note!</p><img src="https://github.com/manoj-dev-001/notes/assets/111769769/08ce8d3f-a9ef-4dc3-8211-343e6d57922b" width="360" height="750">
+
+
+<p>Delete the Anime note!</p><img src="https://github.com/manoj-dev-001/notes/assets/111769769/c417220d-b66f-4473-8c7e-c6d24f1654b3" width="360" height="750">
